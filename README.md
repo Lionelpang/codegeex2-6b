@@ -1,10 +1,22 @@
+---
+language:
+- zh
+- en
+tags:
+- codegeex
+- glm
+- chatglm
+- thudm
+---
+
 ![](resources/codegeex_logo.png)
 
 <p align="center">
     🏠 <a href="https://codegeex.cn" target="_blank">Homepage</a>｜🛠 Tools <a href="https://marketplace.visualstudio.com/items?itemName=aminer.codegeex" target="_blank">VS Code</a>, <a href="https://plugins.jetbrains.com/plugin/20587-codegeex" target="_blank">Jetbrains</a>｜🤗 <a href="https://huggingface.co/THUDM/codegeex2-6b" target="_blank">HF Repo</a>｜📄 <a href="https://arxiv.org/abs/2303.17568" target="_blank">Paper</a>｜👋 Join our <a href="https://wj.qq.com/s2/11274205/a15b/"target="_blank">Wechat</a> 
 </p>
 
-# CodeGeeX2: 更强大的多语言代码生成模型 | A More Powerful Multilingual Code Generation Model
+# CodeGeeX2: 更强大的多语言代码生成模型
+# A More Powerful Multilingual Code Generation Model
 
 CodeGeeX2 是多语言代码生成模型 [CodeGeeX](https://github.com/THUDM/CodeGeeX) ([KDD’23](https://arxiv.org/abs/2303.17568)) 的第二代模型。CodeGeeX2 基于 [ChatGLM2](https://github.com/THUDM/ChatGLM2-6B) 架构加入代码预训练实现，得益于 ChatGLM2 的更优性能，CodeGeeX2 在多项指标上取得性能提升（+107% > CodeGeeX；仅60亿参数即超过150亿参数的 StarCoder-15B 近10%），更多特性包括：
 
