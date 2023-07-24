@@ -12,7 +12,11 @@ tags:
 ![](resources/codegeex_logo.png)
 
 <p align="center">
-    🏠 <a href="https://codegeex.cn" target="_blank">Homepage</a>｜🛠 Tools <a href="https://marketplace.visualstudio.com/items?itemName=aminer.codegeex" target="_blank">VS Code</a>, <a href="https://plugins.jetbrains.com/plugin/20587-codegeex" target="_blank">Jetbrains</a>｜🤗 <a href="https://huggingface.co/THUDM/codegeex2-6b" target="_blank">HF Repo</a>｜📄 <a href="https://arxiv.org/abs/2303.17568" target="_blank">Paper</a>｜👋 Join our <a href="https://wj.qq.com/s2/11274205/a15b/"target="_blank">Wechat</a> 
+    🏠 <a href="https://codegeex.cn" target="_blank">Homepage</a>｜🛠 Tools <a href="https://marketplace.visualstudio.com/items?itemName=aminer.codegeex" target="_blank">VS Code</a>, <a href="https://plugins.jetbrains.com/plugin/20587-codegeex" target="_blank">Jetbrains</a>｜🤗 <a href="https://huggingface.co/THUDM/codegeex2-6b" target="_blank">HF Repo</a>｜📄 <a href="https://arxiv.org/abs/2303.17568" target="_blank">Paper</a>
+</p>
+
+<p align="center">
+    👋 Join our <a href="https://discord.gg/8gjHdkmAN6" target="_blank">Discord</a>, <a href="https://join.slack.com/t/codegeexworkspace/shared_invite/zt-1s118ffrp-mpKKhQD0tKBmzNZVCyEZLw" target="_blank">Slack</a>, <a href="https://t.me/+IipIayJ32B1jOTg1" target="_blank">Telegram</a>, <a href="https://wj.qq.com/s2/11274205/a15b/"target="_blank">WeChat</a>
 </p>
 
 # CodeGeeX2: 更强大的多语言代码生成模型
