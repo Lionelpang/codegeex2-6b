@@ -19,7 +19,7 @@ tags:
     👋 Join our <a href="https://discord.gg/8gjHdkmAN6" target="_blank">Discord</a>, <a href="https://join.slack.com/t/codegeexworkspace/shared_invite/zt-1s118ffrp-mpKKhQD0tKBmzNZVCyEZLw" target="_blank">Slack</a>, <a href="https://t.me/+IipIayJ32B1jOTg1" target="_blank">Telegram</a>, <a href="https://github.com/THUDM/CodeGeeX2/blob/main/resources/wechat.md"target="_blank">WeChat</a>
 </p>
 
-INT4量化版本请见 [codegeex2-6b-int4](https://huggingface.co/THUDM/codegeex2-6b-int4), INT4 quantized version is in [codegeex2-6b-int4](https://huggingface.co/THUDM/codegeex2-6b-int4)
+INT4量化版本｜INT4 quantized version [codegeex2-6b-int4](https://huggingface.co/THUDM/codegeex2-6b-int4)
 
 # CodeGeeX2: 更强大的多语言代码生成模型
 # A More Powerful Multilingual Code Generation Model
