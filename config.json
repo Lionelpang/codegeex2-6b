@@ -35,7 +35,7 @@
   "seq_length": 8192,
   "use_cache": true,
   "torch_dtype": "bfloat16",
-  "transformers_version": "4.27.1",
+  "transformers_version": "4.30.2",
   "tie_word_embeddings": false,
   "eos_token_id": 2
 }
