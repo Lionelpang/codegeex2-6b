@@ -5,7 +5,7 @@ import copy
 import warnings
 import re
 import sys
-
+import functools
 import torch
 import torch.utils.checkpoint
 import torch.nn.functional as F
@@ -177,15 +177,21 @@ def apply_rotary_pos_emb(x: torch.Tensor, rope_cache: torch.Tensor) -> torch.Ten
 
 
 class RMSNorm(torch.nn.Module):
-    def __init__(self, normalized_shape, eps=1e-5, device=None, dtype=None, **kwargs):
+    def __init__(self, normalized_shape, eps=1e-5, device=None, dtype=None, quantized=False, **kwargs):
         super().__init__()
         self.weight = torch.nn.Parameter(torch.empty(normalized_shape, device=device, dtype=dtype))
         self.eps = eps
+        self.quantized = quantized
 
     def forward(self, hidden_states: torch.Tensor):
-        input_dtype = hidden_states.dtype
-        variance = hidden_states.to(torch.float32).pow(2).mean(-1, keepdim=True)
-        hidden_states = hidden_states * torch.rsqrt(variance + self.eps)
+        if not self.quantized:
+            norm_x = torch.mean(hidden_states * hidden_states, dim=-1, keepdim=True)
+            x_normed = hidden_states * torch.rsqrt(norm_x + self.eps)
+            return self.weight * x_normed
+        else:
+            input_dtype = hidden_states.dtype
+            variance = hidden_states.to(torch.float32).pow(2).mean(-1, keepdim=True)
+            hidden_states = hidden_states * torch.rsqrt(variance + self.eps)
 
         return (self.weight * hidden_states).to(input_dtype)
 
@@ -515,10 +521,17 @@ class GLMBlock(torch.nn.Module):
 
         self.fp32_residual_connection = config.fp32_residual_connection
 
-        LayerNormFunc = RMSNorm if config.rmsnorm else LayerNorm
+        if config.rmsnorm:
+            if config.quantization_bit != 0:
+                LayerNormFunc = functools.partial(RMSNorm, quantized=True)
+            else:
+                LayerNormFunc = RMSNorm
+        else:
+            LayerNormFunc = LayerNorm
+        
         # Layernorm on the input data.
         self.input_layernorm = LayerNormFunc(config.hidden_size, eps=config.layernorm_epsilon, device=device,
-                                             dtype=config.torch_dtype)
+                                                 dtype=config.torch_dtype)
 
         # Self attention.
         self.self_attention = SelfAttention(config, layer_number, device=device)
@@ -593,7 +606,13 @@ class GLMTransformer(torch.nn.Module):
         self.layers = torch.nn.ModuleList([build_layer(i + 1) for i in range(self.num_layers)])
 
         if self.post_layer_norm:
-            LayerNormFunc = RMSNorm if config.rmsnorm else LayerNorm
+            if config.rmsnorm:
+                if config.quantization_bit != 0:
+                    LayerNormFunc = functools.partial(RMSNorm, quantized=True)
+                else:
+                    LayerNormFunc = RMSNorm
+            else:
+                LayerNormFunc = LayerNorm
             # Final layer norm before output.
             self.final_layernorm = LayerNormFunc(config.hidden_size, eps=config.layernorm_epsilon, device=device,
                                                  dtype=config.torch_dtype)
