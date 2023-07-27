@@ -225,7 +225,7 @@ class ChatGLMTokenizer(PreTrainedTokenizer):
                 (optional) Set to False to avoid returning attention mask (default: set to model specifics)
         """
         # Load from model defaults
-        assert self.padding_side == "left"
+        # assert self.padding_side == "left"
 
         required_input = encoded_inputs[self.model_input_names[0]]
         seq_length = len(required_input)
@@ -248,10 +248,17 @@ class ChatGLMTokenizer(PreTrainedTokenizer):
         if needs_to_be_padded:
             difference = max_length - len(required_input)
 
-            if "attention_mask" in encoded_inputs:
-                encoded_inputs["attention_mask"] = [0] * difference + encoded_inputs["attention_mask"]
-            if "position_ids" in encoded_inputs:
-                encoded_inputs["position_ids"] = [0] * difference + encoded_inputs["position_ids"]
-            encoded_inputs[self.model_input_names[0]] = [self.pad_token_id] * difference + required_input
+            if self.padding_side == "left":
+                if "attention_mask" in encoded_inputs:
+                    encoded_inputs["attention_mask"] = [0] * difference + encoded_inputs["attention_mask"]
+                if "position_ids" in encoded_inputs:
+                    encoded_inputs["position_ids"] = [0] * difference + encoded_inputs["position_ids"]
+                encoded_inputs[self.model_input_names[0]] = [self.pad_token_id] * difference + required_input
+            else:
+                if "attention_mask" in encoded_inputs:
+                    encoded_inputs["attention_mask"] = encoded_inputs["attention_mask"] + [0] * difference
+                if "position_ids" in encoded_inputs:
+                    encoded_inputs["position_ids"] = encoded_inputs["position_ids"] + [0] * difference
+                encoded_inputs[self.model_input_names[0]] = required_input + [self.pad_token_id] * difference
 
         return encoded_inputs
