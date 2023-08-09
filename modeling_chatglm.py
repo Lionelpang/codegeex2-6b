@@ -16,6 +16,7 @@ from transformers.modeling_outputs import (
     BaseModelOutputWithPast,
     CausalLMOutputWithPast,
 )
+
 from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import logging
 from transformers.generation.logits_process import LogitsProcessor
@@ -1138,7 +1139,7 @@ class ChatGLMForConditionalGeneration(ChatGLMPreTrainedModel):
         )
         logits_warper = self._get_logits_warper(generation_config)
 
-        unfinished_sequences = input_ids.new(input_ids.shape[0]).fill_(1)
+        unfinished_sequences = torch.ones(input_ids.shape[0], device=input_ids.device, dtype=input_ids.dtype)
         scores = None
         while True:
             model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
