@@ -182,7 +182,7 @@ class RMSNorm(torch.nn.Module):
         self.eps = eps
 
     def forward(self, hidden_states: torch.Tensor):
-        if hidden_states == torch.bfloat16:
+        if hidden_states.dtype == torch.bfloat16:
             norm_x = torch.mean(hidden_states * hidden_states, dim=-1, keepdim=True)
             x_normed = hidden_states * torch.rsqrt(norm_x + self.eps)
             return self.weight * x_normed
